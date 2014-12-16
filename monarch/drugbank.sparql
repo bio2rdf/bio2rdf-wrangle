@@ -1,0 +1,77 @@
+PREFIX dv: <http://bio2rdf.org/drugbank_vocabulary:>
+PREFIX hgnc: <http://bio2rdf.org/hgnc_vocabulary:>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX bio2rdf: <http://bio2rdf.org/bio2rdf_vocabulary:>
+PREFIX chebi: <http://purl.obolibrary.org/obo/CHEBI_>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX pav: <http://purl.org/pav/>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix ncbigene: <http://purl.obolibrary.org/obo/NCBIGene_> 
+prefix : <http://monarch-initiative.org/> 
+ 
+CONSTRUCT {
+  ?drug dv:target ?target .
+  ?drug rdfs:label ?drug_label .
+  ?drug :hasRole ?role . 
+  ?target rdfs:label ?target_label .
+ 
+ ?assertion 
+	rdf:type sio:association ;
+    :hasSubject ?drug ;
+    :hasObject ?target;
+    :hasPredicate dv:target;
+    :hasSubjectRole ?role;
+    dct:source ?pubmed ;
+    prov:wasGeneratedBy :drugbank-target-to-monarch-conversion .
+  
+   :drugbank-target-to-monarch-conversion 
+	  rdf:type prov:Activity ;
+      prov:wasAttributedTo  <http://orcid.org/0000-0003-4727-9435>;
+      prov:used :drugbank-target-to-monarch-sparql; #query
+      prov:used ?dataset; # dataset
+      prov:used <http://beta.openlifedata.org/drugbank/sparql>. #endpoint
+      
+  :drugbank-target-to-monarch-sparql 
+    rdf:type <http://purl.org/net/provenance/types#SPARQLQuery>; 
+    dct:author <http://orcid.org/0000-0003-4727-9435>; 
+	rdfs:seeAlso <http://github.com/bio2rdf/bio2rdf-wrangle/blob/master/monarch/drugbank.sparql> .
+  
+  <http://orcid.org/0000-0003-4727-9435> a foaf:Person; foaf:name "Michel Dumontier".
+}
+ 
+WHERE {
+ { SELECT distinct ?assertion ?drug ?target ?role ?pubmed 
+ {
+  ?relation a dv:Target-relation .
+  ?relation dv:drug ?db_drug. 
+  ?relation dv:target ?db_target .
+  ?relation dv:action ?action .
+  ?relation void:inDataset ?dataset .
+  ?action bio2rdf:identifier ?action_identifier .
+  ?relation dv:reference ?ref .
+  ?ref bio2rdf:identifier ?ref_identifier .
+  ?db_drug a dv:Drug .
+  ?db_drug bio2rdf:identifier ?drug_identifier .
+  ?db_drug dct:title ?drug_label .
+  ?db_drug dv:target ?db_target .
+  ?db_target dct:title ?target_label .
+      {
+         SELECT ?ncbigene AS ?target_uri
+       {
+        ?hgnc hgnc:x-uniprot ?uniprot .
+        ?hgnc hgnc:x-ncbigene ?ncbigene .
+       } GROUP BY ?ncbigene LIMIT 1
+      }
+  ?target_uri bio2rdf:identifier ?target_identifier .
+  BIND(?db_drug AS ?drug)
+  BIND(iri(concat("http://purl.obolibrary.org/obo/NCBIGene_",?target_identifier)) AS ?target)
+  BIND(iri(concat("http://www.ncbi.nlm.nih.gov/pubmed/",?ref_identifier)) AS ?pubmed)
+  BIND(iri(concat("http://monarch-initiative.org/",?drug_identifier,"_",?action_identifier, "_", ?target_identifier)) AS ?assertion)
+}}
+}
