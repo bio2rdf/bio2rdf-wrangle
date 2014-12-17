@@ -1,0 +1,50 @@
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ns1:	<http://monarch-initiative.org/> .
+@prefix ns2:	<http://semanticscience.org/resource/> .
+ns1:DB00452_inhibitor_90332	rdf:type	ns2:association .
+@prefix dcterms:	<http://purl.org/dc/terms/> .
+ns1:DB00452_inhibitor_90332	dcterms:source	<http://www.ncbi.nlm.nih.gov/pubmed/17016423> ,
+		<http://www.ncbi.nlm.nih.gov/pubmed/17139284> ,
+		<http://www.ncbi.nlm.nih.gov/pubmed/8605174> .
+@prefix ns4:	<http://www.w3.org/ns/prov#> .
+ns1:DB00452_inhibitor_90332	ns4:wasGeneratedBy	ns1:drugbank-target-to-monarch-conversion .
+@prefix ns5:	<http://bio2rdf.org/drugbank_vocabulary:> .
+ns1:DB00452_inhibitor_90332	ns1:hasPredicate	ns5:target ;
+	ns1:hasSubjectRole	ns5:inhibitor .
+@prefix ns6:	<http://bio2rdf.org/drugbank:> .
+ns1:DB00452_inhibitor_90332	ns1:hasSubject	ns6:DB00452 .
+@prefix ns7:	<http://purl.obolibrary.org/obo/> .
+ns1:DB00452_inhibitor_90332	ns1:hasObject	ns7:NCBIGene_90332 .
+ns1:DB00452_antagonist_286514	rdf:type	ns2:association ;
+	dcterms:source	<http://www.ncbi.nlm.nih.gov/pubmed/14638394> ,
+		<http://www.ncbi.nlm.nih.gov/pubmed/11747436> ;
+	ns4:wasGeneratedBy	ns1:drugbank-target-to-monarch-conversion ;
+	ns1:hasPredicate	ns5:target ;
+	ns1:hasSubjectRole	ns5:antagonist ;
+	ns1:hasSubject	ns6:DB00452 ;
+	ns1:hasObject	ns7:NCBIGene_286514 .
+ns6:DB00452	ns5:target	ns7:NCBIGene_90332 ,
+		ns7:NCBIGene_286514 ,
+		ns7:NCBIGene_57644 .
+@prefix foaf:	<http://xmlns.com/foaf/0.1/> .
+<http://orcid.org/0000-0003-4727-9435>	rdf:type	foaf:Person ;
+	foaf:name	"Michel Dumontier" .
+ns1:drugbank-target-to-monarch-conversion	rdf:type	ns4:Activity ;
+	ns4:wasAttributedTo	<http://orcid.org/0000-0003-4727-9435> ;
+	ns4:used	ns1:drugbank-target-to-monarch-sparql .
+@prefix ns9:	<http://beta.openlifedata.org/drugbank/> .
+ns1:drugbank-target-to-monarch-conversion	ns4:used	ns9:sparql .
+@prefix ns10:	<http://purl.org/net/provenance/types#> .
+ns1:drugbank-target-to-monarch-sparql	rdf:type	ns10:SPARQLQuery .
+@prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
+ns1:drugbank-target-to-monarch-sparql	rdfs:seeAlso	<http://github.com/bio2rdf/bio2rdf-wrangle/blob/master/monarch/drugbank.sparql> ;
+	dcterms:author	<http://orcid.org/0000-0003-4727-9435> .
+ns1:DB00452_inhibitor_57644	rdf:type	ns2:association ;
+	dcterms:source	<http://www.ncbi.nlm.nih.gov/pubmed/17399988> ,
+		<http://www.ncbi.nlm.nih.gov/pubmed/17016423> ,
+		<http://www.ncbi.nlm.nih.gov/pubmed/17139284> ;
+	ns4:wasGeneratedBy	ns1:drugbank-target-to-monarch-conversion ;
+	ns1:hasPredicate	ns5:target ;
+	ns1:hasSubjectRole	ns5:inhibitor ;
+	ns1:hasSubject	ns6:DB00452 ;
+	ns1:hasObject	ns7:NCBIGene_57644 .
