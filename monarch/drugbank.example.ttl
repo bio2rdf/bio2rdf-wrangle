@@ -31,11 +31,11 @@ ns6:DB00452	ns5:target	ns7:NCBIGene_90332 ,
 	foaf:name	"Michel Dumontier" .
 ns1:drugbank-target-to-monarch-conversion	rdf:type	ns4:Activity ;
 	ns4:wasAttributedTo	<http://orcid.org/0000-0003-4727-9435> ;
-	ns4:used	ns1:drugbank-target-to-monarch-sparql .
-@prefix ns9:	<http://beta.openlifedata.org/drugbank/> .
-ns1:drugbank-target-to-monarch-conversion	ns4:used	ns9:sparql .
-@prefix ns10:	<http://purl.org/net/provenance/types#> .
-ns1:drugbank-target-to-monarch-sparql	rdf:type	ns10:SPARQLQuery .
+	ns4:used	ns1:drugbank-target-to-monarch-sparql ,
+		<http://bio2rdf.org/drugbank_resource:bio2rdf.dataset.drugbank.R3> ,
+		<http://s2.semanticscience.org:13000> .
+@prefix ns9:	<http://purl.org/net/provenance/types#> .
+ns1:drugbank-target-to-monarch-sparql	rdf:type	ns9:SPARQLQuery .
 @prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
 ns1:drugbank-target-to-monarch-sparql	rdfs:seeAlso	<http://github.com/bio2rdf/bio2rdf-wrangle/blob/master/monarch/drugbank.sparql> ;
 	dcterms:author	<http://orcid.org/0000-0003-4727-9435> .
